@@ -1,0 +1,81 @@
+---
+- name: Preparations | Install all packages for wordpress
+  apt: 
+    name: "{{ packages_wp }}"
+    state: latest
+    update_cache: true 
+
+- name: Preparations | Create direcroty for wordpress
+  file: 
+    path: "{{ path_direcroty_wp }}"
+    state: directory
+
+- name: Preparations | Download wordpress
+  get_url: 
+    url: "{{ download_url_wp }}"
+    dest: "{{ download_path }}"
+
+- name: Check version wordpress 
+  shell:  | 
+    ls {{ download_path }}/wordpress-*.tar.gz
+  register: version_wordpress
+
+
+- name: Preparations | Unarchive wordpress
+  unarchive:
+    src: "{{ version_wordpress.stdout }}"
+    dest: "{{ path_direcroty_wp }}"
+    remote_src: yes 
+
+- name: Preparations | Granting rights to the direcroty wordpress
+  file:
+    path: "{{ path_direcroty_wp }}"
+    state: directory
+    recurse: yes 
+    owner: www-data
+    group: www-data
+
+# - name: Preparations | Copy file wp-config.php
+  # copy:
+    # src: "{{ path_direcroty_wp }}/wordpress/wp-config-sample.php"
+    # dest: "{{ path_direcroty_wp }}/wordpress/wp-config.php"
+    # remote_src: yes
+
+- name: Preparations | Configure file wp-config.php
+  template:
+    src: wp-config.php.j2
+    dest: "{{ path_direcroty_wp }}/wordpress/wp-config.php"  
+
+- name: Settings MariaDB | Start and enable mariadb 
+  service: 
+    name: mariadb 
+    enabled: true 
+    state: started
+
+- name: Settings MariaDB | Configure root password for MariaDB 
+  command: 
+    cmd: mysqladmin -u root password {{ mariadb_root_pass }}
+
+- name: Settings MariaDB | Create DB for wordpress
+  community.mysql.mysql_db:
+    name: "{{ database_name }}"
+    login_user: root 
+    login_password: "{{ mariadb_root_pass }}"
+  failed_when: false 
+
+- name: Settings MariaDB | Create User for wordpress
+  community.mysql.mysql_user:
+    name: "{{ database_user }}"
+    password: "{{ database_user_pass }}"
+    priv: '*.*:ALL,GRANT'
+    host: '%'
+    state: present
+    login_user: root
+    login_password: "{{ mariadb_root_pass }}"
+
+- name: Settings NGINX | Configure wordpress.conf 
+  template: 
+    src: wordpress.conf.j2 
+    dest: /etc/nginx/conf.d/wordpress.conf
+  notify: 
+    - Restart nginx and php-fpm
