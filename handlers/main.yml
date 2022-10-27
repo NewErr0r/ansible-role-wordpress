@@ -1,0 +1,9 @@
+---
+- name: Restart nginx and php-fpm
+  service:
+    name: "{{ item }}"
+    enabled: true 
+    state: restarted
+  loop: 
+    - nginx 
+    - php7.4-fpm
