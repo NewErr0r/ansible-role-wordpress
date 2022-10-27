@@ -1,0 +1,11 @@
+---
+# Install all packages for wordpress
+packages_wp:
+  - nginx 
+  - php 
+  - php-fpm 
+  - php-mysql 
+  - mysql-common 
+  - mariadb-server 
+  - mariadb-client
+  - python3-pymysql
