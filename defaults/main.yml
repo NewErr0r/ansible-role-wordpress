@@ -6,7 +6,7 @@ path_direcroty_wp: /var/www/wordpress
 download_url_wp: "https://wordpress.org/latest.tar.gz"
 download_path: "{{ path_direcroty_wp }}"
 
-# MariaDB variables
+# MariaDB variables for wordpress
 mariadb_root_pass: "P@ssw0rd"
 database_name: "wordpress"
 database_user: "wordpress"
