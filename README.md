@@ -20,3 +20,7 @@
   <pre>git clone https://github.com/NewErr0r/ansible-role-wordpress.gitt</pre>
 
 <p>
+    <strong>Шаг 3.</strong> Запустить playbook для развёртывания платформы wordpress:
+</p>
+  
+  <pre>ansible-playbook -i inventory playbook.yaml</pre>
