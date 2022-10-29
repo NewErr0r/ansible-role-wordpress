@@ -1,0 +1,16 @@
+<h1>Автоматизация развёртывания платформы Wordpress"</h1>
+
+<p>
+    <strong>Шаг 1.</strong> Создание playbook для запуска роли
+</p>
+<p><i>Пример:</i></p>
+
+    ---
+    - name: Deploy wordpress
+      hosts: all 
+      become: true 
+
+      roles: 
+        - ansible-role-wordpress
+
+<p>
