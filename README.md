@@ -1,4 +1,4 @@
-<h1>Автоматизация развёртывания платформы Wordpress"</h1>
+<h1>Автоматизация развёртывания платформы Wordpress</h1>
 
 <p>
     <strong>Шаг 1.</strong> Создание playbook для запуска роли
@@ -12,5 +12,11 @@
 
       roles: 
         - ansible-role-wordpress
+
+<p>
+ <strong>Шаг 2.</strong> Склонировать роль в дирректорию с playbook:
+</p>
+
+  <pre>git clone https://github.com/NewErr0r/ansible-role-wordpress.gitt</pre>
 
 <p>
