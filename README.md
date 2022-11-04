@@ -14,7 +14,7 @@
         - ansible-role-wordpress
 
 <p>
- <strong>Шаг 2.</strong> Склонировать роль в дирректорию с playbook:
+ <strong>Шаг 2. </strong> Склонировать роль в дирректорию с playbook:
 </p>
 
   <pre>git clone https://github.com/NewErr0r/ansible-role-wordpress.gitt</pre>
